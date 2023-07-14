@@ -32,7 +32,6 @@
                     </thead>
                     <tbody class="table-group-divider">
                         @foreach ($submissions as $item)
-                        {{-- {{$submissions}} --}}
                             <tr class="table-primary">
                                 <td scope="row">{{ $item->user->name }}</td>
                                 <td>{{ $item->assignment->title }}</td>
