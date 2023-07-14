@@ -9,18 +9,21 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
+    // Student dashboad
     function index()
     {
         $assignments = Assignments::paginate(20);
         return view('home')->with(['assignments' => $assignments]);
     }
 
+    // Get assignment
     function GetAssignment($id)
     {
         $assignment = Assignments::findOrFail($id);
         return $assignment;
     }
 
+    // Subbmit assignments
     function SubmitAssignment(Request $request)
     {
         $request->validate(['attachment_file' => 'required', 'assignment_id' => 'required']);

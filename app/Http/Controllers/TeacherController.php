@@ -9,17 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
+    // Teacher Dashboard
     function index()
     {
         return view('home');
     }
 
+    // Teacher view asignment
     function Assignments()
     {
         $assignments = Assignments::where(['user_id' => Auth::user()->id])->get();
         return view('teachers.assignments', ['assignments' => $assignments]);
     }
 
+    // Teacher stores assignment
     function StoreAssignment(Request $request)
     {
         $request->validate([
@@ -40,6 +43,7 @@ class TeacherController extends Controller
         }
     }
 
+    // Teacher view thei assgnment
     function ViewAssignment($id)
     {
         $assignment = Assignments::findOrFail($id);

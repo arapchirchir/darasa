@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Defining user roles for redirections
         $role = Auth::user()->user_type;
         $checkrole = explode(',', $role);
 
