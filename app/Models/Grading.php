@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Grading extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'comments',
+        'assignments_id',
+        'grade',
+    ];
 }

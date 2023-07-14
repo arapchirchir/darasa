@@ -35,7 +35,11 @@
                             <tr class="table-primary">
                                 <td scope="row">{{ $item->user->name }}</td>
                                 <td>{{ $item->assignment->title }}</td>
-                                <td><i class="bi bi-cloud-arrow-down btn btn-success"></i></td>
+                                <td>
+                                    <i class="bi bi-cloud-arrow-down btn btn-success"></i>
+                                    <i class="bi bi-eye btn btn-info" id="viewAssignment"
+                                        assignment-id="{{ $item->id }}" student-id="{{ $item->user->id }}"></i>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -50,4 +54,52 @@
             </div>
         @endif
     </div>
+
+    <div class="modal" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close" id="modalClose">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="dueDate"></div>
+                    <div id="assignmentDesc" class="mb-3"></div>
+                    <form action="{{ route('assignment.award') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group mb-3">
+                            <label for="attachments">Award</label>
+                            <input type="hidden" name="assignment_id" value="" id="assignmentId">
+                            <input id="attachment" class="form-control" type="text" value="" name="awarded_mark">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        $(function() {
+            let viewAssignmentButtons = document.querySelectorAll('#viewAssignment');
+            viewAssignmentButtons.forEach((element) => {
+                element.addEventListener('click', (e) => {
+                    $("#assignmentId").val(element.getAttribute('assignment-id'))
+                    let data ={student_id:element.getAttribute('student-id')};
+                    $('#myModal').show();
+
+                    $("#modalClose").click(function() {
+                        $('#myModal').hide();
+                    });
+
+                });
+            });
+        });
+    </script>
 @endsection

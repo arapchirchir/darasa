@@ -30,6 +30,7 @@ Route::middleware(['teacher'])->controller(TeacherController::class)->group(func
     Route::get('assignments', 'Assignments')->name('assignments');
     Route::post('assignments', 'StoreAssignment')->name('assignment.store');
     Route::get('assignment/{id}', 'ViewAssignment')->name('assignments.view');
+    Route::post('assignment/award', 'AwardAssignment')->name('assignment.award');
 });
 
 Route::middleware(['student'])->controller(StudentController::class)->group(function () {

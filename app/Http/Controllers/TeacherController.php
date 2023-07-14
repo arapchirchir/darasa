@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignments;
+use App\Models\Grading;
 use App\Models\StudentSubmissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,5 +50,24 @@ class TeacherController extends Controller
         $assignment = Assignments::findOrFail($id);
         $submissions = StudentSubmissions::where(['assignments_id' => $assignment->id])->with(['user', 'assignment'])->get();
         return view('teachers.assignment')->with(['assignment' => $assignment, 'submissions' => $submissions]);
+    }
+
+    function AwardAssignment(Request $request)
+    {
+        $request->validate([
+            'awarded_mark' => 'required',
+            'assignment_id' => 'required',
+            'student_id' => 'required',
+        ]);
+
+        $data = [
+            'user_id' => $request->student_id,
+            'comments' => $request->comments,
+            'assignments_id' => $request->assignments_id,
+            'grade' => $request->grade,
+        ];
+
+        Grading::create($data);
+        return redirect()->back();
     }
 }
