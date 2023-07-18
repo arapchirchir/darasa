@@ -66,17 +66,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="dueDate"></div>
-                    <div id="assignmentDesc" class="mb-3"></div>
                     <form action="{{ route('assignment.award') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="attachments">Award</label>
                             <input type="hidden" name="assignment_id" value="" id="assignmentId">
-                            <input id="attachment" class="form-control" type="text" value="" name="awarded_mark">
+                            <input id="awardedMark" class="form-control" type="text" value="" name="awarded_mark">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="comments">Comments</label>
+                            <textarea name="comments" id="commentMade" cols="" rows="" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info">Submit</button>
+                            <button type="submit" class="btn btn-info" id="submitAward">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -91,8 +93,31 @@
             viewAssignmentButtons.forEach((element) => {
                 element.addEventListener('click', (e) => {
                     $("#assignmentId").val(element.getAttribute('assignment-id'))
-                    let data ={student_id:element.getAttribute('student-id')};
+                    let studentName = element.parentElement.parentElement.children[0].textContent;
+                    $("#staticBackdropLabel").text(studentName);
                     $('#myModal').show();
+
+                    $("#submitAward").click(function(e) {
+                        e.preventDefault();
+                        let data = {
+                            student_id: element.getAttribute('student-id'),
+                            assignment_id: element.getAttribute('assignment-id'),
+                            awarded_mark: $("#awardedMark").val(),
+                            comments: $("#commentMade").val(),
+                        };
+
+                        axios.post('/assignment/award', data)
+                            .then((res) => {
+                                console.log(res.status);
+                                if (res.status === 200) {
+                                    window.location.reload();
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+
+                    });
 
                     $("#modalClose").click(function() {
                         $('#myModal').hide();

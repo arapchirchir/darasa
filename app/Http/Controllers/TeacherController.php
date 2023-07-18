@@ -58,16 +58,22 @@ class TeacherController extends Controller
             'awarded_mark' => 'required',
             'assignment_id' => 'required',
             'student_id' => 'required',
+            'comments' => 'required',
         ]);
 
         $data = [
             'user_id' => $request->student_id,
             'comments' => $request->comments,
-            'assignments_id' => $request->assignments_id,
-            'grade' => $request->grade,
+            'assignments_id' => $request->assignment_id,
+            'grade' => $request->awarded_mark,
         ];
 
-        Grading::create($data);
-        return redirect()->back();
+        $graded = Grading::create($data);
+
+        if ($graded) {
+            return response()->json(['message' => 'Graded successfully'], 200);
+        } else {
+            return response()->json(['message' => 'An error occurred'], 412);
+        }
     }
 }
