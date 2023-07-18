@@ -48,7 +48,7 @@ class TeacherController extends Controller
     function ViewAssignment($id)
     {
         $assignment = Assignments::findOrFail($id);
-        $submissions = StudentSubmissions::where(['assignments_id' => $assignment->id])->with(['user', 'assignment'])->get();
+        $submissions = StudentSubmissions::where(['assignments_id' => $assignment->id])->with(['user', 'assignment','grading'])->get();
         return view('teachers.assignment')->with(['assignment' => $assignment, 'submissions' => $submissions]);
     }
 

@@ -35,4 +35,15 @@ class StudentSubmissions extends Model
     {
         return $this->hasOne(Assignments::class, 'id', 'assignments_id');
     }
+
+
+    /**
+     * Get the grading associated with the StudentSubmissions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function grading(): HasOne
+    {
+        return $this->hasOne(Grading::class, 'assignments_id');
+    }
 }

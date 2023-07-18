@@ -12,7 +12,7 @@ class StudentController extends Controller
     // Student dashboad
     function index()
     {
-        $assignments = Assignments::paginate(20);
+        $assignments = Assignments::with('grade')->paginate(20);
         return view('home')->with(['assignments' => $assignments]);
     }
 
@@ -36,7 +36,7 @@ class StudentController extends Controller
                 'user_id' => Auth::user()->id,
                 'upload_file' => $name,
             ];
-
+            
             StudentSubmissions::create($data);
             return redirect()->back();
         }

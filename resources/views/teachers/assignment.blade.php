@@ -27,7 +27,8 @@
                         <tr>
                             <th>Student name</th>
                             <th>Title</th>
-                            <th>File</th>
+                            <th>Grading</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -35,6 +36,7 @@
                             <tr class="table-primary">
                                 <td scope="row">{{ $item->user->name }}</td>
                                 <td>{{ $item->assignment->title }}</td>
+                                <td>{{ $item->grading == null ? 'Not graded' : $item->grading->grade . ' %' }}</td>
                                 <td>
                                     <i class="bi bi-cloud-arrow-down btn btn-success"></i>
                                     <i class="bi bi-eye btn btn-info" id="viewAssignment"

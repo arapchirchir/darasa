@@ -22,16 +22,19 @@
                                         <th class="text-nowrap">Due date</th>
                                         <th>Title</th>
                                         <th>Description</th>
+                                        <th>Score</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
                                     @foreach ($assignments as $item)
+                                        {{ $item }}
                                         <tr class="table-light">
                                             <td class="text-nowrap" scope="row">
                                                 {{ date('jS M Y', strtotime($item->due_date)) }}</td>
                                             <td>{{ $item->title }}</td>
                                             <td>{{ Str::words($item->description, 50) }}</td>
+                                            <td>{{ $item->grade == null ? 'Not graded' : $item->grade->grade }}</td>
                                             <td>
                                                 <div class="d-flex">
                                                     <i class="bi bi-eye btn btn-info" id="viewAssignment"
